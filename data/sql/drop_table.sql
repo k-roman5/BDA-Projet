@@ -2,4 +2,4 @@ DROP TABLE IF EXISTS communes;
 DROP TABLE IF EXISTS departements;
 DROP TABLE IF EXISTS regions;
 DROP TABLE IF EXISTS cheflieureg;
-DROP TABLE IF EXISTS cheflieudep;
+DROP TABLE IF EXISTS cheflieudep

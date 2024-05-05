@@ -12,13 +12,13 @@ try:
 
     cursor.execute(sql_script)
     connection.commit()
-    print("Tables créées avec succès.")
+    print("Tables created successfully.")
 
 except (Exception, Error) as error:
-    print("Erreur lors de la création des tables :", error)
+    print("Error creating tables :", error)
 
 finally:
     if connection:
         cursor.close()
         connection.close()
-        print("Connexion à la base de données fermée.")
+        print("Database connection closed.")
