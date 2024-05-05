@@ -11,12 +11,10 @@ def clean_csv(file_path, columns_to_drop, filter_column=None, filter_value=None)
     df = df.drop(columns=columns_to_drop, axis=1)
     return df
 
-
 df_region = clean_csv("data/datafiles/area/v_region_2023.csv", ['CHEFLIEU', 'TNCC', 'NCC', 'NCCENR'])
 df_departement = clean_csv("data/datafiles/area/v_departement_2023.csv", ['CHEFLIEU', 'TNCC', 'NCC', 'NCCENR'])
 df_communes = clean_csv("data/datafiles/area/v_commune_2023.csv", 
                                  ['TYPECOM', 'REG', 'CTCD', 'ARR', 'TNCC', 'NCC', 'NCCENR', 'CAN', 'COMPARENT'], 
                                  filter_column='TYPECOM', filter_value='COM')
-
 df_cheflieudep = clean_csv("data/datafiles/area/v_departement_2023.csv", ['REG', 'TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
 df_cheflieureg = clean_csv("data/datafiles/area/v_region_2023.csv", ['TNCC', 'NCC', 'NCCENR', 'LIBELLE'])

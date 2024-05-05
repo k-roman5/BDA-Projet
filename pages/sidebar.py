@@ -17,7 +17,6 @@ NAV_LINK_STYLE = {
 
 PAGE_ORDER = ["Home"]
 
-
 def generate_sidebar(pathname):
     sidebar = html.Div(
         [

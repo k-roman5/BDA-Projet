@@ -13,7 +13,6 @@ card_style = {
     "background-color": "#F8F9FA",
 }
 
-
 layout = html.Div(style={"color": "black", "min-height": "100vh"}, children=[
     html.Div([
         html.H1("Home", style={"textAlign": "center",
