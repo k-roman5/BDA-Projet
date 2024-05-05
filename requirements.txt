@@ -1,7 +1,5 @@
 dash
 pandas
 dash_bootstrap_components
-pymongo
 psycopg2
-io
 connect_db
