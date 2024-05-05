@@ -1,18 +1,18 @@
 import io
-from data.connect import connection
+from connect import connection
+from clean_data import df_region, df_departement, df_communes
 
-from data.clean_data import df_region, df_departement
+def copy_data_to_db_table(df, table_name, cursor):
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False, header=False)
+    csv_data = csv_buffer.getvalue()
+    cursor.copy_from(io.StringIO(csv_data), table_name, sep=',')
 
 cursor = connection.cursor()
-csv_buffer = io.StringIO()
 
-#df_region.to_csv(csv_buffer, index=False, header=False)
-#csv_data = csv_buffer.getvalue()
-#cursor.copy_from(io.StringIO(csv_data), 'regions', sep=',')
-
-df_departement.to_csv(csv_buffer, index=False, header=False)
-csv_data = csv_buffer.getvalue()
-cursor.copy_from(io.StringIO(csv_data), 'departements', sep=',')
+copy_data_to_db_table(df_region, 'regions', cursor)
+copy_data_to_db_table(df_departement, 'departements', cursor)
+copy_data_to_db_table(df_communes, 'communes', cursor)
 
 connection.commit()
 print("Données importées avec succès !")
