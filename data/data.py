@@ -1,23 +1,11 @@
 import psycopg2
 import csv
-
-dbname = "postgres"
-user = "postgres"
-password = "SQL"
-host = "localhost"
-port = "5432"
+from connect import connection
 
 csv_file = "data/datafiles/area/v_commune_2023.csv"
 
 try:
-    connection = psycopg2.connect(
-        dbname = dbname, user = user, password = password, host = host, port = port
-    )
     cursor = connection.cursor()
-
-    with open(csv_file, 'r') as f:
-        next(f)
-        cursor.copy_from(f, 'communities', sep=',')
 
     connection.commit()
     print("Données importées avec succès !")
