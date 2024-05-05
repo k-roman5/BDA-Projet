@@ -1,6 +1,5 @@
 from psycopg2 import Error
-
-from connect import connection
+from connect_db import connection
 
 script_path = "data/sql/create_table.sql"
 

@@ -7,23 +7,22 @@ SIDEBAR_STYLE = {
     "top": 0,
     "left": 0,
     "bottom": 0,
-    "width": "16rem",
+    "width": "10rem",
     "padding": "2rem 1rem",
-    "background-color": "#670907",  
+    "background-color": "grey",  
 }
 NAV_LINK_STYLE = {
     "color": "white",
 }
 
-PAGE_ORDER = ["Home", "Visualisations", "About us"]
+PAGE_ORDER = ["Home"]
 
 
 def generate_sidebar(pathname):
     sidebar = html.Div(
         [
-            html.H2("PROJET", style={"color": "white"}),
+            html.H2("Menu", style={"color": "white", "textAlign": "center"}),
             html.Hr(style={"border-color": "white"}),
-            html.P("Menu", className="lead", style={"color": "white"}),
             dbc.Nav(
                 [
                     dbc.NavLink(

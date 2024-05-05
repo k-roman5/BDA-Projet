@@ -10,7 +10,7 @@ external_stylesheets = [
 app = dash.Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets,
                 suppress_callback_exceptions=True, assets_folder='assets_folder')
 
-app.layout = html.Div(style={'backgroundColor': '#c0c0bb', 'min-height': '100vh'}, children=[
+app.layout = html.Div(style={'backgroundColor': 'white', 'min-height': '100vh'}, children=[
     dbc.Row([
         dbc.Col(width=2, children=generate_sidebar("")),
         dbc.Col(width=10, children=dash.page_container)
