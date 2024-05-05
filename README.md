@@ -40,6 +40,7 @@ Dash Version: 2.17.0
 Dash_bootstrap_components Version : 1.6.0
 Psycopg2-binary Version : 2.9.9
 ```
+
 ___
 
 ## Installation : 
@@ -49,6 +50,7 @@ Pour obtenir la liste complète des extensions utilisées dans ce projet, veuill
 ```bash 
 pip install -r requirements.txt
 ```
+
 ___
 
 ## Données : 
