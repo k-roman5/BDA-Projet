@@ -2,7 +2,6 @@ dash
 pandas
 dash_bootstrap_components
 pymongo
-requests
 psycopg2
 io
 connect_db
