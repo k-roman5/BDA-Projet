@@ -18,3 +18,15 @@ df_communes = clean_csv("data/datafiles/area/v_commune_2023.csv",
                                  filter_column='TYPECOM', filter_value='COM')
 df_cheflieudep = clean_csv("data/datafiles/area/v_departement_2023.csv", ['REG', 'TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
 df_cheflieureg = clean_csv("data/datafiles/area/v_region_2023.csv", ['TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
+
+# Popultation -----------------------------------------------------------------------------
+df_pop = pd.read_csv("data/datafiles/population/France_hors_Mayotte.CSV", delimiter=';', dtype=str)
+df_pop = df_pop.dropna()
+df_pop['CODGEO'] = df_pop['CODGEO'].apply(lambda x: '0' + str(x) if len(str(x)) == 4 else x)
+df_pop_merge = pd.merge(df_pop, df_communes, left_on='CODGEO', right_on='COM')
+df_pop_merge = df_pop_merge[df_pop.columns]
+df_population = df_pop_merge[['CODGEO', 'P20_POP', 'P14_POP', 'P09_POP', 'D99_POP', 'D90_POP', 'D82_POP', 'D75_POP', 'D68_POP']]
+colonnes_population = ['P20_POP', 'P14_POP', 'P09_POP', 'D99_POP', 'D90_POP', 'D82_POP', 'D75_POP', 'D68_POP']
+df_population[colonnes_population] = df_population[colonnes_population].astype(int)
+df_population = df_population[(df_population[colonnes_population] != 0).any(axis=1)]
+print(df_population)
