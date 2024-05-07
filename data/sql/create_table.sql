@@ -29,11 +29,11 @@ CREATE TABLE cheflieudep (
 
 CREATE TABLE populations (
     code_com VARCHAR(10) NOT NULL,
-    anneedebut INT NOT NULL,
-    anneefin INT NOT NULL,
+    annee_debut INT NOT NULL,
+    annee_fin INT NOT NULL,
     type_stat VARCHAR(20) NOT NULL,
     valeur_stat FLOAT,
-    CONSTRAINT pk_populations PRIMARY KEY (code_com, anneedebut, anneefin, type_stat),
+    CONSTRAINT pk_populations PRIMARY KEY (code_com, annee_debut, annee_fin, type_stat),
     CONSTRAINT fk_populations_communes FOREIGN KEY (code_com) REFERENCES communes(code_com)
 );
 

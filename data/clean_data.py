@@ -19,22 +19,77 @@ df_communes = clean_csv("data/datafiles/area/v_commune_2023.csv",
 df_cheflieudep = clean_csv("data/datafiles/area/v_departement_2023.csv", ['REG', 'TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
 df_cheflieureg = clean_csv("data/datafiles/area/v_region_2023.csv", ['TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
 
-# Popultation -----------------------------------------------------------------------------
-df_pop = pd.read_csv("data/datafiles/population/France_hors_Mayotte.CSV", delimiter=';', dtype=str)
-df_pop = df_pop.dropna()
-df_pop['CODGEO'] = df_pop['CODGEO'].apply(lambda x: '0' + str(x) if len(str(x)) == 4 else x)
-df_pop_merge = pd.merge(df_pop, df_communes, left_on='CODGEO', right_on='COM')
-df_pop_merge = df_pop_merge[df_pop.columns]
-df_population = df_pop_merge[['CODGEO', 'P20_POP', 'P14_POP', 'P09_POP', 'D99_POP', 'D90_POP', 'D82_POP', 'D75_POP', 'D68_POP']]
-colonnes_population = ['P20_POP', 'P14_POP', 'P09_POP', 'D99_POP', 'D90_POP', 'D82_POP', 'D75_POP', 'D68_POP']
-df_population[colonnes_population] = df_population[colonnes_population].astype(int)
-df_population = df_population[(df_population[colonnes_population] != 0).any(axis=1)]
-print(df_population)
-
-# Mariages --------------------------------------------------------------------------------
+# DF Mariages --------------------------------------------------------------------------------
 df_GroupeAgeEpoux = pd.read_csv("data/datafiles/weddings/Dep1.csv", delimiter=';', dtype=str)
 df_EtatMatrimonialAnterieur = pd.read_csv("data/datafiles/weddings/Dep2.csv", delimiter=';', dtype=str)
 df_GroupeAgePremierMariage = pd.read_csv("data/datafiles/weddings/Dep3.csv", delimiter=';', dtype=str)
 df_NationaliteEpoux = pd.read_csv("data/datafiles/weddings/Dep4.csv", delimiter=';', dtype=str)
 df_PaysNaissanceEpoux = pd.read_csv("data/datafiles/weddings/Dep5.csv", delimiter=';', dtype=str)
 df_RepartitionMensuelleMariages = pd.read_csv("data/datafiles/weddings/Dep6.csv", delimiter=';', dtype=str)
+
+
+# DF Popultation -----------------------------------------------------------------------------
+def process_demographic_data(file_path, columns_to_merge, value_columns, type_stat):
+    df = pd.read_csv(file_path, delimiter=';', dtype=str)
+    df = df.dropna()
+    df['CODGEO'] = df['CODGEO'].apply(lambda x: '0' + str(x) if len(str(x)) == 4 else x)
+    df_merge = pd.merge(df, df_communes, left_on='CODGEO', right_on='COM')
+    df_merge = df_merge[columns_to_merge]
+    for col in value_columns:
+        df_merge[col] = pd.to_numeric(df_merge[col], errors='coerce')
+    df_merge = pd.melt(df_merge, id_vars=['CODGEO'], var_name='annee', value_name='valeur_stat')
+
+    if value_columns[1].startswith(('P', 'D')) and value_columns[1][1:3].isdigit():
+        df_merge['annee_debut'] = df_merge.apply(lambda x: int('20' + x['annee'][1:3]) if x['annee'].startswith('P') else int('19' + x['annee'][1:3]), axis=1)
+        df_merge['annee_fin'] = df_merge.apply(lambda x: int('20' + x['annee'][1:3]) if x['annee'].startswith('P') else int('19' + x['annee'][1:3]), axis=1)
+    else:
+        if type_stat == 'naissances' : 
+            df_merge['annee_debut'] = df_merge.apply(lambda x: int(x['annee'][4:6]) + 2000 if x['annee'].startswith(('NAIS20', 'NAIS14', 'NAIS09')) else int(x['annee'][4:6]) + 1900 if x['annee'].startswith('NAIS') else None, axis=1)
+            df_merge['annee_fin'] = df_merge.apply(lambda x: int(x['annee'][6:]) + 2000 if x['annee'].startswith(('NAIS20', 'NAIS14', 'NAIS09','NAIS99')) else int(x['annee'][6:]) + 1900 if x['annee'].startswith('NAIS') else None, axis=1)
+        elif type_stat == 'décès' :
+            df_merge['annee_debut'] = df_merge.apply(lambda x: int(x['annee'][4:6]) + 2000 if x['annee'].startswith(('DECE20','DECE14', 'DECE09')) else int(x['annee'][4:6]) + 1900 if x['annee'].startswith('DECE') else None, axis=1)
+            df_merge['annee_fin'] = df_merge.apply(lambda x: int(x['annee'][6:]) + 2000 if x['annee'].startswith(('DECE20','DECE14', 'DECE09','DECE99')) else int(x['annee'][6:]) + 1900 if x['annee'].startswith('DECE') else None, axis=1)
+    
+    df_merge['type_stat'] = type_stat
+    df_merge = df_merge.drop('annee', axis=1)
+    return df_merge
+
+# Popultation -----------------------------------------------------------------------------
+df_pop = process_demographic_data(
+    "data/datafiles/population/France_hors_Mayotte.CSV",
+    ['CODGEO','P20_POP', 'P14_POP','P09_POP','D99_POP', 'D90_POP', 'D82_POP','D75_POP','D68_POP'],
+    ['P20_POP', 'P14_POP','P09_POP','D99_POP', 'D90_POP', 'D82_POP','D75_POP','D68_POP'],
+    'population'
+)
+
+# Logement -----------------------------------------------------------------------------
+df_log = process_demographic_data(
+    "data/datafiles/population/France_hors_Mayotte.CSV",
+    ['CODGEO','P20_LOG', 'P14_LOG','P09_LOG','D99_LOG', 'D90_LOG', 'D82_LOG','D75_LOG','D68_LOG'],
+    ['P20_LOG', 'P14_LOG','P09_LOG','D99_LOG', 'D90_LOG', 'D82_LOG','D75_LOG','D68_LOG'],
+    'logement'
+)
+
+# Naissances -----------------------------------------------------------------------------
+df_nais = process_demographic_data(
+    "data/datafiles/population/France_hors_Mayotte.CSV",
+    ['CODGEO', 'NAIS1420', 'NAIS0914', 'NAIS9909', 'NAIS9099', 'NAIS8290', 'NAIS7582', 'NAIS6875'],
+    ['NAIS1420', 'NAIS0914', 'NAIS9909', 'NAIS9099', 'NAIS8290', 'NAIS7582', 'NAIS6875'],
+    'naissances'
+)
+
+# Décès -----------------------------------------------------------------------------
+df_deces = process_demographic_data(
+    "data/datafiles/population/France_hors_Mayotte.CSV",
+    ['CODGEO', 'DECE1420', 'DECE0914', 'DECE9909', 'DECE9099', 'DECE8290', 'DECE7582', 'DECE6875'],
+    ['DECE1420', 'DECE0914', 'DECE9909', 'DECE9099', 'DECE8290', 'DECE7582', 'DECE6875'],
+    'décès'
+)
+
+# Concatenation -----------------------------------------------------------------------------
+df_combined_pop = pd.concat([df_pop, df_log, df_nais, df_deces]).reset_index(drop=True)
+df_combined_pop['annee_debut'] = df_combined_pop['annee_debut'].astype(int)
+df_combined_pop['annee_fin'] = df_combined_pop['annee_fin'].astype(int)
+
+new_column_order = ['CODGEO', 'annee_debut', 'annee_fin', 'type_stat', 'valeur_stat']
+df_combined_pop = df_combined_pop[new_column_order]
