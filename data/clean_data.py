@@ -30,3 +30,11 @@ colonnes_population = ['P20_POP', 'P14_POP', 'P09_POP', 'D99_POP', 'D90_POP', 'D
 df_population[colonnes_population] = df_population[colonnes_population].astype(int)
 df_population = df_population[(df_population[colonnes_population] != 0).any(axis=1)]
 print(df_population)
+
+# Mariages --------------------------------------------------------------------------------
+df_GroupeAgeEpoux = pd.read_csv("data/datafiles/weddings/Dep1.csv", delimiter=';', dtype=str)
+df_EtatMatrimonialAnterieur = pd.read_csv("data/datafiles/weddings/Dep2.csv", delimiter=';', dtype=str)
+df_GroupeAgePremierMariage = pd.read_csv("data/datafiles/weddings/Dep3.csv", delimiter=';', dtype=str)
+df_NationaliteEpoux = pd.read_csv("data/datafiles/weddings/Dep4.csv", delimiter=';', dtype=str)
+df_PaysNaissanceEpoux = pd.read_csv("data/datafiles/weddings/Dep5.csv", delimiter=';', dtype=str)
+df_RepartitionMensuelleMariages = pd.read_csv("data/datafiles/weddings/Dep6.csv", delimiter=';', dtype=str)
