@@ -1,12 +1,11 @@
 import dash
 from dash import html
 import dash_bootstrap_components as dbc
+import psycopg2
+import configparser
 
 dash.register_page(__name__, location="sidebar", external_stylesheets=[
     dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
-
-import psycopg2
-import pandas as pd
 
 dbname = "postgres"
 user = "postgres"
@@ -22,6 +21,11 @@ connection = psycopg2.connect(
 )
 
 def show_request():
+    config = configparser.ConfigParser()
+    config.read("data/queries_sql.ini")
+
+    query1 = config.get("QUESTION1", "query1")
+    
     df = 0
     return html.Div([
         dbc.Table.from_dataframe(df, striped=True, bordered=True, hover=True, className='table-sm table-md')
