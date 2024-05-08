@@ -15,7 +15,7 @@ NAV_LINK_STYLE = {
     "color": "white",
 }
 
-PAGE_ORDER = ["Home"]
+PAGE_ORDER = ["Home", "Queries sql"]
 
 def generate_sidebar(pathname):
     sidebar = html.Div(
@@ -30,7 +30,7 @@ def generate_sidebar(pathname):
                         id=f"{page['name'].lower()}-link",
                         style={
                             **NAV_LINK_STYLE,
-                            "font-size": "1.5rem" 
+                            "font-size": "1rem" 
                         },
                         active={
                             'font-weight': 'bold'
