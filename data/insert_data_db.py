@@ -1,6 +1,6 @@
 import io
 from connect_db import connection
-from format_data import read_csv, clean_csv, regdep_formatting, process_demographic_data
+from format_data import read_csv, clean_csv, regdep_formatting, process_demographic_data, concat_dataframes
 
 ### DATA ###
 df_region = clean_csv("data/datafiles/area/v_region_2023.csv", ['CHEFLIEU', 'TNCC', 'NCC', 'NCCENR'])
@@ -48,7 +48,7 @@ df_deces = process_demographic_data(
     'décès',
     df_communes['COM']
 )
-df_combined_pop = pd.concat([df_pop, df_log, df_nais, df_deces]).reset_index(drop=True)
+df_combined_pop = concat_dataframes([df_pop, df_log, df_nais, df_deces])
 new_column_order = ['CODGEO', 'annee_debut', 'annee_fin', 'type_stat', 'valeur_stat']
 df_combined_pop = df_combined_pop[new_column_order]
 ############

@@ -40,3 +40,6 @@ def process_demographic_data(file_path, columns, type_stat, communes):
     df = df.drop('annee', axis=1)
     df = df.dropna()
     return df
+
+def concat_dataframes(dfs):
+    return pd.concat(dfs).reset_index(drop=True)
