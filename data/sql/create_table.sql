@@ -37,58 +37,56 @@ CREATE TABLE populations (
     CONSTRAINT fk_populations_communes FOREIGN KEY (code_com) REFERENCES communes(code_com)
 );
 
---
-
 
 -- Tables pour les données de mariage
 
-CREATE TABLE GroupeAgeEpoux (
-    id INT CONSTRAINT cle_id_groupe_age_epoux PRIMARY KEY,
+CREATE TABLE groupeageepoux (
     typmar3 VARCHAR(10),
-    code_dep VARCHAR(10) CONSTRAINT cle_dep_mariage_age REFERENCES departements(code_dep),
+    dep_mar VARCHAR(10) CONSTRAINT cle_dep_mar_groupeageepoux REFERENCES departements(code_dep),
     groupeage VARCHAR(10),
-    nbmaries INT CONSTRAINT non_neg_nbmaries CHECK (nbmaries >= 0)
+    nbmaries INT CONSTRAINT non_neg_nbmaries_groupeageepoux CHECK (nbmaries >= 0),
+    CONSTRAINT pk_groupeageepoux PRIMARY KEY (typmar3, dep_mar, groupeage)
 );
 
-CREATE TABLE EtatMatrimonialAnterieur (
-    id INT CONSTRAINT cle_id_etat_matrimonial PRIMARY KEY,
+CREATE TABLE etatmatrimonialanterieur (
     typmar VARCHAR(10),
-    code_dep VARCHAR(10) CONSTRAINT cle_dep_etat_matrimonial REFERENCES departements(code_dep),
+    dep_mar VARCHAR(10) CONSTRAINT cle_dep_mar_etatmatrimonialanterieur REFERENCES departements(code_dep),
     sexe VARCHAR(1),
     etat VARCHAR(10),
-    nbmaries INT CONSTRAINT non_neg_nbmaries_etat_matrimonial CHECK (nbmaries >= 0)
+    nbmaries INT CONSTRAINT non_neg_nbmaries_etatmatrimonialanterieur CHECK (nbmaries >= 0),
+    CONSTRAINT pk_etatmatrimonialanterieur PRIMARY KEY (typmar, dep_mar, sexe, etat)
 );
 
-CREATE TABLE GroupeAgePremierMariage (
-    id INT CONSTRAINT cle_id_groupe_age_premier_mariage PRIMARY KEY,
+CREATE TABLE groupeagepremiermariage (
     typmar3 VARCHAR(10),
-    code_dep VARCHAR(10) CONSTRAINT cle_dep_premier_mariage_age REFERENCES departements(code_dep),
+    dep_mar VARCHAR(10) CONSTRAINT cle_dep_mar_groupeagepremiermariage REFERENCES departements(code_dep),
     groupeage VARCHAR(10),
-    nbmaries INT CONSTRAINT non_neg_nbmaries_premier_mariage CHECK (nbmaries >= 0)
+    nbmaries INT CONSTRAINT non_neg_nbmaries_groupeagepremiermariage CHECK (nbmaries >= 0),
+    CONSTRAINT pk_groupeagepremiermariage PRIMARY KEY (typmar3, dep_mar, groupeage)
 );
 
-CREATE TABLE NationaliteEpoux (
-    id INT CONSTRAINT cle_id_nationalite_pays_naissance PRIMARY KEY,
+CREATE TABLE nationaliteepoux (
     typmar2 VARCHAR(10),
-    dep_dom VARCHAR(10) CONSTRAINT cle_dep_nationalite_naissance REFERENCES departements(code_dep),
+    dep_domi VARCHAR(10) CONSTRAINT cle_dep_dom_nationaliteepoux REFERENCES departements(code_dep),
     nationalite VARCHAR(10),
-    nbmar INT CONSTRAINT non_neg_nbmar_nationalite CHECK (nbmar >= 0)
+    nbmar INT CONSTRAINT non_neg_nbmar_nationaliteepoux CHECK (nbmar >= 0),
+    CONSTRAINT pk_nationaliteepoux PRIMARY KEY (typmar2, dep_domi, nationalite)
 );
 
-CREATE TABLE PaysNaissanceEpoux (
-    id INT CONSTRAINT cle_id_pays_naissance PRIMARY KEY,
+CREATE TABLE paysnaissanceepoux (
     typmar2 VARCHAR(10),
-    dep_dom VARCHAR(10) CONSTRAINT cle_dep_pays_naissance REFERENCES departements(code_dep),
+    dep_domi VARCHAR(10) CONSTRAINT cle_dep_dom_paysnaissanceepoux REFERENCES departements(code_dep),
     pays_naissance VARCHAR(10),
-    nbmar INT CONSTRAINT non_neg_nbmar_pays_naissance CHECK (nbmar >= 0)
+    nbmar INT CONSTRAINT non_neg_nbmar_paysnaissanceepoux CHECK (nbmar >= 0),
+    CONSTRAINT pk_paysnaissanceepoux PRIMARY KEY (typmar2, dep_domi, pays_naissance)
 );
 
-CREATE TABLE RepartitionMensuelleMariages (
-    id INT CONSTRAINT cle_id_repartition_mensuelle PRIMARY KEY,
+CREATE TABLE repartitionmensuellemariages (
     typmar VARCHAR(10),
-    code_dep VARCHAR(10) CONSTRAINT cle_dep_repartition_mensuelle REFERENCES departements(code_dep),
+    dep_mar VARCHAR(10) CONSTRAINT cle_dep_repartitionmensuellemariages REFERENCES departements(code_dep),
     mois VARCHAR(10),
-    nbmar INT CONSTRAINT non_neg_nbmar_repartition_mensuelle CHECK (nbmar >= 0)
+    nbmar INT CONSTRAINT non_neg_nbmar_repartitionmensuellemariages CHECK (nbmar >= 0),
+    CONSTRAINT pk_repartitionmensuellemariages PRIMARY KEY (typmar, dep_mar, mois)
 );
 
 --

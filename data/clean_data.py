@@ -21,11 +21,46 @@ df_cheflieureg = clean_csv("data/datafiles/area/v_region_2023.csv", ['TNCC', 'NC
 
 # DF Mariages --------------------------------------------------------------------------------
 df_GroupeAgeEpoux = pd.read_csv("data/datafiles/weddings/Dep1.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_GroupeAgeEpoux = df_GroupeAgeEpoux[df_GroupeAgeEpoux['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
+df_GroupeAgeEpoux = df_GroupeAgeEpoux[~df_GroupeAgeEpoux['REGDEP_MAR'].str.endswith('XX')] # XX = Total
+df_GroupeAgeEpoux['REGDEP_MAR'] = df_GroupeAgeEpoux['REGDEP_MAR'].str[-2:]
+df_GroupeAgeEpoux = df_GroupeAgeEpoux.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+
 df_EtatMatrimonialAnterieur = pd.read_csv("data/datafiles/weddings/Dep2.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur[df_EtatMatrimonialAnterieur['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
+df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur[~df_EtatMatrimonialAnterieur['REGDEP_MAR'].str.endswith('XX')] # XX = Total
+df_EtatMatrimonialAnterieur['REGDEP_MAR'] = df_EtatMatrimonialAnterieur['REGDEP_MAR'].str[-2:]
+df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+
 df_GroupeAgePremierMariage = pd.read_csv("data/datafiles/weddings/Dep3.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_GroupeAgePremierMariage = df_GroupeAgePremierMariage[df_GroupeAgePremierMariage['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
+df_GroupeAgePremierMariage = df_GroupeAgePremierMariage[~df_GroupeAgePremierMariage['REGDEP_MAR'].str.endswith('XX')] # XX = Total
+df_GroupeAgePremierMariage['REGDEP_MAR'] = df_GroupeAgePremierMariage['REGDEP_MAR'].str[-2:]
+df_GroupeAgePremierMariage = df_GroupeAgePremierMariage.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+
 df_NationaliteEpoux = pd.read_csv("data/datafiles/weddings/Dep4.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_NationaliteEpoux = df_NationaliteEpoux[df_NationaliteEpoux['REGDEP_DOMI'].apply(lambda x: len(x) == 4)]
+df_NationaliteEpoux = df_NationaliteEpoux[~df_NationaliteEpoux['REGDEP_DOMI'].str.endswith('XX')] # XX = Total
+df_NationaliteEpoux['REGDEP_DOMI'] = df_NationaliteEpoux['REGDEP_DOMI'].str[-2:]
+df_NationaliteEpoux = df_NationaliteEpoux.rename(columns={'REGDEP_DOMI': 'DEP_DOMI'})
+
 df_PaysNaissanceEpoux = pd.read_csv("data/datafiles/weddings/Dep5.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_PaysNaissanceEpoux = df_PaysNaissanceEpoux[df_PaysNaissanceEpoux['REGDEP_DOMI'].apply(lambda x: len(x) == 4)]
+df_PaysNaissanceEpoux = df_PaysNaissanceEpoux[~df_PaysNaissanceEpoux['REGDEP_DOMI'].str.endswith('XX')] # XX = Total
+df_PaysNaissanceEpoux['REGDEP_DOMI'] = df_PaysNaissanceEpoux['REGDEP_DOMI'].str[-2:]
+df_PaysNaissanceEpoux = df_PaysNaissanceEpoux.rename(columns={'REGDEP_DOMI': 'DEP_DOMI'})
+
 df_RepartitionMensuelleMariages = pd.read_csv("data/datafiles/weddings/Dep6.csv", delimiter=';', dtype=str)
+# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
+df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages[df_RepartitionMensuelleMariages['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
+df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages[~df_RepartitionMensuelleMariages['REGDEP_MAR'].str.endswith('XX')] # XX = Total
+df_RepartitionMensuelleMariages['REGDEP_MAR'] = df_RepartitionMensuelleMariages['REGDEP_MAR'].str[-2:]
+df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
 
 
 # DF Popultation -----------------------------------------------------------------------------
