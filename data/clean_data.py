@@ -1,11 +1,7 @@
 import pandas as pd
 
-def read_csv(file_path):
-    df = pd.read_csv(file_path, delimiter=',')
-    return df
-
 def clean_csv(file_path, columns_to_drop, filter_column=None, filter_value=None):
-    df = read_csv(file_path)
+    df = pd.read_csv(file_path, delimiter=',', dtype=str)
     if filter_column is not None and filter_value is not None:
         df = df[df[filter_column] == filter_value]
     df = df.drop(columns=columns_to_drop, axis=1)
@@ -20,108 +16,89 @@ df_cheflieudep = clean_csv("data/datafiles/area/v_departement_2023.csv", ['REG',
 df_cheflieureg = clean_csv("data/datafiles/area/v_region_2023.csv", ['TNCC', 'NCC', 'NCCENR', 'LIBELLE'])
 
 # DF Mariages --------------------------------------------------------------------------------
+def regdep_formatting(df):
+    """Format the REGDEP column in the dataframe to keep only the metropolitan department number ."""
+    column_name = 'REGDEP_MAR' if 'REGDEP_MAR' in df.columns else 'REGDEP_DOMI'    
+    df = df.dropna()
+    df = df[df[column_name].apply(lambda x: len(x) == 4)]
+    df = df[~df[column_name].str.endswith('XX')]
+    df[column_name] = df[column_name].str[-2:]
+    new_column_name = 'DEP_MAR' if 'REGDEP_MAR' in df.columns else 'DEP_DOMI'
+    df = df.rename(columns={column_name: new_column_name})
+    return df
+
 df_GroupeAgeEpoux = pd.read_csv("data/datafiles/weddings/Dep1.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_GroupeAgeEpoux = df_GroupeAgeEpoux[df_GroupeAgeEpoux['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
-df_GroupeAgeEpoux = df_GroupeAgeEpoux[~df_GroupeAgeEpoux['REGDEP_MAR'].str.endswith('XX')] # XX = Total
-df_GroupeAgeEpoux['REGDEP_MAR'] = df_GroupeAgeEpoux['REGDEP_MAR'].str[-2:]
-df_GroupeAgeEpoux = df_GroupeAgeEpoux.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+df_GroupeAgeEpoux = regdep_formatting(df_GroupeAgeEpoux)
 
 df_EtatMatrimonialAnterieur = pd.read_csv("data/datafiles/weddings/Dep2.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur[df_EtatMatrimonialAnterieur['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
-df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur[~df_EtatMatrimonialAnterieur['REGDEP_MAR'].str.endswith('XX')] # XX = Total
-df_EtatMatrimonialAnterieur['REGDEP_MAR'] = df_EtatMatrimonialAnterieur['REGDEP_MAR'].str[-2:]
-df_EtatMatrimonialAnterieur = df_EtatMatrimonialAnterieur.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+df_EtatMatrimonialAnterieur = regdep_formatting(df_EtatMatrimonialAnterieur)
 
 df_GroupeAgePremierMariage = pd.read_csv("data/datafiles/weddings/Dep3.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_GroupeAgePremierMariage = df_GroupeAgePremierMariage[df_GroupeAgePremierMariage['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
-df_GroupeAgePremierMariage = df_GroupeAgePremierMariage[~df_GroupeAgePremierMariage['REGDEP_MAR'].str.endswith('XX')] # XX = Total
-df_GroupeAgePremierMariage['REGDEP_MAR'] = df_GroupeAgePremierMariage['REGDEP_MAR'].str[-2:]
-df_GroupeAgePremierMariage = df_GroupeAgePremierMariage.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+df_GroupeAgePremierMariage = regdep_formatting(df_GroupeAgePremierMariage)
 
 df_NationaliteEpoux = pd.read_csv("data/datafiles/weddings/Dep4.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_NationaliteEpoux = df_NationaliteEpoux[df_NationaliteEpoux['REGDEP_DOMI'].apply(lambda x: len(x) == 4)]
-df_NationaliteEpoux = df_NationaliteEpoux[~df_NationaliteEpoux['REGDEP_DOMI'].str.endswith('XX')] # XX = Total
-df_NationaliteEpoux['REGDEP_DOMI'] = df_NationaliteEpoux['REGDEP_DOMI'].str[-2:]
-df_NationaliteEpoux = df_NationaliteEpoux.rename(columns={'REGDEP_DOMI': 'DEP_DOMI'})
+df_NationaliteEpoux = regdep_formatting(df_NationaliteEpoux)
 
 df_PaysNaissanceEpoux = pd.read_csv("data/datafiles/weddings/Dep5.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_PaysNaissanceEpoux = df_PaysNaissanceEpoux[df_PaysNaissanceEpoux['REGDEP_DOMI'].apply(lambda x: len(x) == 4)]
-df_PaysNaissanceEpoux = df_PaysNaissanceEpoux[~df_PaysNaissanceEpoux['REGDEP_DOMI'].str.endswith('XX')] # XX = Total
-df_PaysNaissanceEpoux['REGDEP_DOMI'] = df_PaysNaissanceEpoux['REGDEP_DOMI'].str[-2:]
-df_PaysNaissanceEpoux = df_PaysNaissanceEpoux.rename(columns={'REGDEP_DOMI': 'DEP_DOMI'})
+df_PaysNaissanceEpoux = regdep_formatting(df_PaysNaissanceEpoux)
 
 df_RepartitionMensuelleMariages = pd.read_csv("data/datafiles/weddings/Dep6.csv", delimiter=';', dtype=str)
-# Suppression des DOM-TOM, du total sur la France métrropolitaine et sur la France entière
-df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages[df_RepartitionMensuelleMariages['REGDEP_MAR'].apply(lambda x: len(x) == 4)]
-df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages[~df_RepartitionMensuelleMariages['REGDEP_MAR'].str.endswith('XX')] # XX = Total
-df_RepartitionMensuelleMariages['REGDEP_MAR'] = df_RepartitionMensuelleMariages['REGDEP_MAR'].str[-2:]
-df_RepartitionMensuelleMariages = df_RepartitionMensuelleMariages.rename(columns={'REGDEP_MAR': 'DEP_MAR'})
+df_RepartitionMensuelleMariages = regdep_formatting(df_RepartitionMensuelleMariages)
 
-
-# DF Popultation -----------------------------------------------------------------------------
-def process_demographic_data(file_path, columns_to_merge, value_columns, type_stat):
+# DF Population -----------------------------------------------------------------------------
+def process_demographic_data(file_path, columns, type_stat, communes):
     df = pd.read_csv(file_path, delimiter=';', dtype=str)
     df = df.dropna()
-    df['CODGEO'] = df['CODGEO'].apply(lambda x: '0' + str(x) if len(str(x)) == 4 else x)
-    df_merge = pd.merge(df, df_communes, left_on='CODGEO', right_on='COM')
-    df_merge = df_merge[columns_to_merge]
-    for col in value_columns:
-        df_merge[col] = pd.to_numeric(df_merge[col], errors='coerce')
-    df_merge = pd.melt(df_merge, id_vars=['CODGEO'], var_name='annee', value_name='valeur_stat')
+    df = df[df['CODGEO'].isin(communes)]
+    df = df[columns]
+    df = pd.melt(df, id_vars=['CODGEO'], var_name='annee', value_name='valeur_stat')
 
-    if value_columns[1].startswith(('P', 'D')) and value_columns[1][1:3].isdigit():
-        df_merge['annee_debut'] = df_merge.apply(lambda x: int('20' + x['annee'][1:3]) if x['annee'].startswith('P') else int('19' + x['annee'][1:3]), axis=1)
-        df_merge['annee_fin'] = df_merge.apply(lambda x: int('20' + x['annee'][1:3]) if x['annee'].startswith('P') else int('19' + x['annee'][1:3]), axis=1)
+    if type_stat == 'population' or type_stat == 'logement':
+        year_column = df.apply(lambda x: '20' + x['annee'][1:3] if x['annee'].startswith('P') else '19' + x['annee'][1:3], axis=1)
+        df['annee_debut'] = year_column
+        df['annee_fin'] = year_column
     else:
-        if type_stat == 'naissances' : 
-            df_merge['annee_debut'] = df_merge.apply(lambda x: int(x['annee'][4:6]) + 2000 if x['annee'].startswith(('NAIS20', 'NAIS14', 'NAIS09')) else int(x['annee'][4:6]) + 1900 if x['annee'].startswith('NAIS') else None, axis=1)
-            df_merge['annee_fin'] = df_merge.apply(lambda x: int(x['annee'][6:]) + 2000 if x['annee'].startswith(('NAIS20', 'NAIS14', 'NAIS09','NAIS99')) else int(x['annee'][6:]) + 1900 if x['annee'].startswith('NAIS') else None, axis=1)
-        elif type_stat == 'décès' :
-            df_merge['annee_debut'] = df_merge.apply(lambda x: int(x['annee'][4:6]) + 2000 if x['annee'].startswith(('DECE20','DECE14', 'DECE09')) else int(x['annee'][4:6]) + 1900 if x['annee'].startswith('DECE') else None, axis=1)
-            df_merge['annee_fin'] = df_merge.apply(lambda x: int(x['annee'][6:]) + 2000 if x['annee'].startswith(('DECE20','DECE14', 'DECE09','DECE99')) else int(x['annee'][6:]) + 1900 if x['annee'].startswith('DECE') else None, axis=1)
-    
-    df_merge['type_stat'] = type_stat
-    df_merge = df_merge.drop('annee', axis=1)
-    return df_merge
+        df['annee_debut'] = df.apply(lambda x: '20' + x['annee'][4:6] if x['annee'][4:6] in ['09', '14'] else '19' + x['annee'][4:6], axis=1)
+        df['annee_fin'] = df.apply(lambda x: '20' + x['annee'][-2:] if x['annee'][-2:] in ['09', '14', '20'] else '19' + x['annee'][-2:], axis=1)
 
-# Popultation -----------------------------------------------------------------------------
+    df['type_stat'] = type_stat
+    df = df.drop('annee', axis=1)
+    df = df.dropna()
+    return df
+
+# Population -----------------------------------------------------------------------------
 df_pop = process_demographic_data(
     "data/datafiles/population/France_hors_Mayotte.CSV",
     ['CODGEO','P20_POP', 'P14_POP','P09_POP','D99_POP', 'D90_POP', 'D82_POP','D75_POP','D68_POP'],
-    ['P20_POP', 'P14_POP','P09_POP','D99_POP', 'D90_POP', 'D82_POP','D75_POP','D68_POP'],
-    'population'
+    'population',
+    df_communes['COM']
 )
 
-# Logement -----------------------------------------------------------------------------
+# Logement -------------------------------------------------------------------------------
 df_log = process_demographic_data(
     "data/datafiles/population/France_hors_Mayotte.CSV",
     ['CODGEO','P20_LOG', 'P14_LOG','P09_LOG','D99_LOG', 'D90_LOG', 'D82_LOG','D75_LOG','D68_LOG'],
-    ['P20_LOG', 'P14_LOG','P09_LOG','D99_LOG', 'D90_LOG', 'D82_LOG','D75_LOG','D68_LOG'],
-    'logement'
+    'logement',
+    df_communes['COM']
 )
 
 # Naissances -----------------------------------------------------------------------------
 df_nais = process_demographic_data(
     "data/datafiles/population/France_hors_Mayotte.CSV",
     ['CODGEO', 'NAIS1420', 'NAIS0914', 'NAIS9909', 'NAIS9099', 'NAIS8290', 'NAIS7582', 'NAIS6875'],
-    ['NAIS1420', 'NAIS0914', 'NAIS9909', 'NAIS9099', 'NAIS8290', 'NAIS7582', 'NAIS6875'],
-    'naissances'
+    'naissances',
+    df_communes['COM']
 )
 
-# Décès -----------------------------------------------------------------------------
+# Décès ----------------------------------------------------------------------------------
 df_deces = process_demographic_data(
     "data/datafiles/population/France_hors_Mayotte.CSV",
     ['CODGEO', 'DECE1420', 'DECE0914', 'DECE9909', 'DECE9099', 'DECE8290', 'DECE7582', 'DECE6875'],
-    ['DECE1420', 'DECE0914', 'DECE9909', 'DECE9099', 'DECE8290', 'DECE7582', 'DECE6875'],
-    'décès'
+    'décès',
+    df_communes['COM']
 )
 
-# Concatenation -----------------------------------------------------------------------------
+# Concatenation ---------------------------------------------------------------------------
 df_combined_pop = pd.concat([df_pop, df_log, df_nais, df_deces]).reset_index(drop=True)
 df_combined_pop['annee_debut'] = df_combined_pop['annee_debut'].astype(int)
 df_combined_pop['annee_fin'] = df_combined_pop['annee_fin'].astype(int)
