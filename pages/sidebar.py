@@ -15,7 +15,7 @@ NAV_LINK_STYLE = {
     "color": "white",
 }
 
-PAGE_ORDER = ["Home", "Queries sql"]
+PAGE_ORDER = ["Home", "Question"]
 
 def generate_sidebar(pathname):
     sidebar = html.Div(

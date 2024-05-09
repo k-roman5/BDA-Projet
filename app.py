@@ -7,7 +7,7 @@ external_stylesheets = [
     dbc.themes.BOOTSTRAP,
 ]
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets,
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP],
                 suppress_callback_exceptions=True, assets_folder='assets_folder')
 
 app.layout = html.Div(style={'backgroundColor': 'white', 'min-height': '100vh'}, children=[
