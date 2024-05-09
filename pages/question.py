@@ -24,7 +24,14 @@ def layout():
         html.Br(),
         html.Div([ 
             html.H2(f"Liste des départements de la région {nom_de_la_region}"),
-            html.P(f"SELECT * FROM departements WHERE code_reg = '{code_region}';"),
+            dbc.Card([
+                dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),
+                dbc.CardBody([
+                    html.Pre([
+                        html.Code(f"SELECT * FROM departements WHERE code_reg = '{code_region}';", style={'color': 'white'}),
+                    ], className="mb-0", style={'margin': 0, 'background-color': '#dcdcdc', 'padding': '10px', 'border-radius': '5px'}),
+                ], style={'padding': '10px'}),
+            ], color="light", inverse=True),
             departments_of_a_region(code_region),
         ], id="departements_of_a_region",),
     ])
@@ -35,6 +42,15 @@ def update_departements_of_a_region(value):
     nom_de_la_region = region_name(value)
     return html.Div([ 
             html.H2(f"Liste des départements de la région {nom_de_la_region}"),
-            html.P(f"SELECT * FROM departements WHERE code_reg = '{value}';"),
+            html.Br(),
+            dbc.Card([
+                dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),
+                dbc.CardBody([
+                    html.Pre([
+                        html.Code(f"SELECT * FROM departements WHERE code_reg = '{value}';", style={'color': 'black'}),
+                    ], className="mb-0", style={'margin': 0, 'background-color': '#dcdcdc', 'padding': '10px', 'border-radius': '5px'}),
+                ], style={'padding': '10px'}),
+            ], color="light", inverse=True),
+            html.Br(),
             departments_of_a_region(value),
         ], id="departements_of_a_region",)
