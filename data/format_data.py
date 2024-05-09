@@ -5,6 +5,12 @@ def read_csv(file_path, delimiter=',', dtype=str):
 
 def clean_csv(file_path, columns_to_drop, filter_column=None, filter_value=None):
     df = read_csv(file_path)
+    if "DEP" in df.columns :
+        df = df[df["DEP"].str.len() < 3]
+    if "COM" in df.columns:
+        df = df[~df["COM"].str.startswith('97')]
+    if "CHEFLIEU" in df.columns :
+            df = df[~df["CHEFLIEU"].str.startswith('97')]
     if filter_column is not None and filter_value is not None:
         df = df[df[filter_column] == filter_value]
     df = df.drop(columns=columns_to_drop, axis=1)

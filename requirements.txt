@@ -1,5 +1,6 @@
 dash
 pandas
 dash_bootstrap_components
+dash_bootstrap_components
 psycopg2
 connect_db

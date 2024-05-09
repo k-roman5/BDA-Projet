@@ -28,6 +28,8 @@ ___
 
 - __Dash_bootstrap_components (1.6.0)__ est une bibliothèque de création qui permet de concevoir des graphiques interactifs et facilement partageables. Elle peut être utilisée en ligne et hors ligne, et prend en charge une vaste gamme de types de graphiques. (Dash crée des visualisations interactives pour ses applications web avec Plotly.)
 
+- __Dash_bootstrap_components ()__
+
 - __Psycopg2-binary (2.9.9)__ est un adaptateur de base de données PostgreSQL pour Python. Il permet aux applications Python de se connecter à une base de données PostgreSQL, d'exécuter des requêtes SQL et d'interagir avec la base de données de manière transparente. Il s'agit d'une version binaire pré-compilée de la bibliothèque `psycopg2`, ce qui signifie qu'elle est prête à l'emploi sans nécessiter de compilation supplémentaire. Cela facilite l'installation et l'utilisation de cette bibliothèque, en particulier dans des environnements où la compilation de code source n'est pas possible ou souhaitable. `psycopg2-binary` est largement utilisé dans le monde Python pour interagir avec des bases de données PostgreSQL.
 
 ___
