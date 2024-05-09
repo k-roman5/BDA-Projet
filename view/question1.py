@@ -25,11 +25,6 @@ def df_to_table(df):
         dbc.Table.from_dataframe(df, striped=True, bordered=True, hover=True, className='table-sm table-md')
     ])
 
-def departments_of_a_region(code_region):
-    query = f"SELECT * FROM departements WHERE code_reg = '{code_region}';"
-    df = query_to_df(query)
-    return df_to_table(df)
-
 def regions():
     query = "SELECT * FROM regions;"
     df = query_to_df(query)
@@ -39,3 +34,26 @@ def region_name(code_region):
     query = f"SELECT nom FROM regions WHERE code_reg = '{code_region}';"
     df = query_to_df(query)
     return df.iloc[0, 0]
+
+def departements():
+    query = "SELECT * FROM departements;"
+    df = query_to_df(query)
+    return df
+
+def departement_name(code_dep):
+    query = f"SELECT nom FROM departements WHERE code_dep = '{code_dep}';"
+    df = query_to_df(query)
+    return df.iloc[0, 0]
+
+def departments_of_a_region(code_region):
+    query = f"SELECT * FROM departements WHERE code_reg = '{code_region}';"
+    df = query_to_df(query)
+    return df_to_table(df)
+
+def communes_of_a_department_with_population(code_dep, nb_habitants):
+    query = "SELECT code_com, code_dep, nom, annee_debut AS annee, valeur_stat" \
+        + " FROM communes NATURAL JOIN populations" \
+        + f" WHERE code_dep = '{code_dep}' AND valeur_stat > {nb_habitants}" \
+        + " AND type_stat = 'population' AND annee_debut = '2020';"
+    df = query_to_df(query)
+    return df_to_table(df)
