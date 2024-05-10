@@ -1,10 +1,7 @@
-import pandas as pd
 import dash_bootstrap_components as dbc
 from dash import html
 
-from data.db_utils import query_to_df, create_or_replace_view, connection
-
-cursor = connection.cursor()
+from data.db_utils import query_to_df, create_or_replace_view
 
 def df_to_table(df):
     return html.Div([

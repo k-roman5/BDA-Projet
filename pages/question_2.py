@@ -16,6 +16,17 @@ CREATE OR REPLACE VIEW population_departements AS
     GROUP BY d.nom, d.code_dep, p.annee_debut, p.annee_fin;
 """
 
+query2 = """
+CREATE OR REPLACE VIEW population_regions AS 
+    SELECT r.nom AS nom_regions, r.code_reg AS code_regions, p.annee_debut, SUM(p.valeur_stat) AS populations
+    FROM regions r
+    JOIN departements d ON r.code_reg = d.code_reg
+    JOIN communes c ON d.code_dep = c.code_dep
+    JOIN populations p ON c.code_com = p.code_com
+    WHERE p.type_stat = 'population'
+    GROUP BY r.nom, r.code_reg, p.annee_debut, p.annee_fin;
+"""
+
 def layout():
     return html.Div([
         html.Br(),
@@ -42,6 +53,13 @@ def layout():
         html.Br(),
         html.Br(),
         html.H4("La vue pour la population par région"),  
+        html.Br(),
+        dbc.Card([
+            dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),
+            dbc.CardBody([
+                html.Pre(query2, className="mb-0", style={'color': 'black', 'overflowY': 'scroll', 'max-height': '200px'}),
+            ], style={'padding': '10px'}),
+        ], color="light", inverse=True),
         html.Br(),
         html.Div([
             html.Label("Sélectionnez une année :"),

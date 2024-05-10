@@ -10,3 +10,6 @@ DROP TABLE IF EXISTS GroupeAgePremierMariage CASCADE;
 DROP TABLE IF EXISTS NationaliteEpoux CASCADE;
 DROP TABLE IF EXISTS PaysNaissanceEpoux CASCADE;
 DROP TABLE IF EXISTS RepartitionMensuelleMariages CASCADE;
+DROP TABLE IF EXISTS population_dep_annee;
+DROP TABLE IF EXISTS population_reg_annee;
+DROP PROCEDURE IF EXISTS population_dep_reg_annee();
