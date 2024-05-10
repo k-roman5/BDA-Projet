@@ -42,13 +42,7 @@ def view_of_the_view2(year=None):
     query_result = query_to_df(f"SELECT * FROM population_regions WHERE annee_debut = '{year}'")
     return df_to_table(query_result)
 
-
-def years1():
+def years():
     query = "SELECT DISTINCT annee_debut FROM populations;"
-    df = query_to_df(query)
-    return df
-
-def years2():
-    query = "SELECT DISTINCT annee_fin FROM populations;"
     df = query_to_df(query)
     return df
