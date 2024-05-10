@@ -1,8 +1,8 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, callback, Output, Input, dcc
-from view.question2 import years
-from view.question3 import lire_contenu_fichier_sql, view_population_dep_annee, view_population_reg_annee
+
+from view.fonctions import years, lire_contenu_fichier_sql, view_population_dep_annee, view_population_reg_annee
 
 dash.register_page(__name__, location="sidebar", external_stylesheets=[
     dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
@@ -13,6 +13,7 @@ def layout():
         html.Br(),
         html.H2("Procédure stockée SQL"),
         html.Br(),
+        html.P("Une procédure stockée SQL est une série d'instructions SQL précompilées et stockées dans la base de données. Elles peuvent être appelées et exécutées à tout moment pour effectuer des opérations complexes ou répétitives sur les données."),
         html.Br(),
         dbc.Card([
             dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),

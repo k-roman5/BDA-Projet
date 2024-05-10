@@ -1,7 +1,8 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, callback, Output, Input, dcc
-from view.question2 import view_of_the_view1, view_of_the_view2, years
+
+from view.fonctions import view_of_the_view1, view_of_the_view2, years
 
 dash.register_page(__name__, location="sidebar", external_stylesheets=[
     dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
@@ -48,7 +49,7 @@ def layout():
                         options=[{'label': str(value), 'value': str(value)} for value in years()['annee_debut'].unique()],
                         value='2020'
                         ),
-            html.Div(view_of_the_view1('2020'), id='view-table1', style={'overflowY': 'scroll', 'height': '400px'})
+            html.Div(view_of_the_view1('2020', query1), id='view-table1', style={'overflowY': 'scroll', 'height': '400px'})
         ]),
         html.Br(),
         html.Br(),
@@ -67,7 +68,7 @@ def layout():
                         options=[{'label': str(value), 'value': str(value)} for value in years()['annee_debut'].unique()],
                         value='2020'
                         ),
-            html.Div(view_of_the_view2('2020'), id='view-table2', style={'overflowY': 'scroll', 'height': '400px'})
+            html.Div(view_of_the_view2('2020', query2), id='view-table2', style={'overflowY': 'scroll', 'height': '400px'})
         ]),
         html.Br(),
     ])
@@ -78,7 +79,7 @@ def layout():
     prevent_initial_call = True
 )
 def update_view1(year):
-    updated_view = view_of_the_view1(year)
+    updated_view = view_of_the_view1(year, query1)
     return updated_view
 
 @callback(
@@ -87,5 +88,5 @@ def update_view1(year):
     prevent_initial_call = True
 )
 def update_view2(year):
-    updated_view = view_of_the_view2(year)
+    updated_view = view_of_the_view2(year, query2)
     return updated_view

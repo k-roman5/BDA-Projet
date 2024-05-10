@@ -3,8 +3,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import html, callback, Output, Input, dcc
 
-from view.question1 import df_to_table
-from data.db_utils import query_to_df
+from view.fonctions import df_to_table, query_to_df
 
 dash.register_page(__name__, location="sidebar", external_stylesheets=[
     dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
@@ -17,7 +16,7 @@ def layout():
         html.H1("Résultats des requêtes SQL"),
         html.Br(),
         dcc.Dropdown(id="select_query",
-                        options=[{'label': config.get('TITLE', 'title'+i), 'value': i} for i in ['1', '2', '3', '4']],
+                        options=[{'label': config.get('TITLE', 'title'+i), 'value': i} for i in ['1', '2', '3', '4', '5', '6']],
                         value='1'
             ),
         html.Div([
