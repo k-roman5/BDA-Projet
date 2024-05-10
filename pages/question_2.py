@@ -1,6 +1,5 @@
 import dash
 import dash_bootstrap_components as dbc
-import dash_mantine_components as dmc
 from dash import html, callback, Output, Input, dcc
 from view.question2 import view_of_the_view1, view_of_the_view2, years1
 
@@ -34,11 +33,10 @@ def layout():
         html.Br(),
         html.Div([
             html.Label("Sélectionnez une année :"),
-            dmc.Select(placeholder="Choissez une années",
-                                id="year-dropdown1",
-                                data=years1().rename(columns={'annee_debut': 'value'}).to_dict(orient='records'),
-                                value='2020'
-                                ),
+            dcc.Dropdown(id="year-dropdown1",
+                        options=[{'label': str(value), 'value': str(value)} for value in years1()['annee_debut'].unique()],
+                        value='2020'
+                        ),
             html.Div(view_of_the_view1('2020'), id='view-table1', style={'overflowY': 'scroll', 'height': '400px'})
         ]),
         html.Br(),
