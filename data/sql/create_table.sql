@@ -16,12 +16,12 @@ CREATE TABLE communes (
 );
 
 CREATE TABLE cheflieureg (
-    code_reg VARCHAR(10) CONSTRAINT cle_reg_cheflieureg REFERENCES regions(code_reg),
+    code_reg VARCHAR(10) CONSTRAINT pk_cle_reg_cheflieureg REFERENCES regions(code_reg) PRIMARY KEY,
     code_com VARCHAR(10) CONSTRAINT cle_com_cheflieureg REFERENCES communes(code_com)
 );
 
 CREATE TABLE cheflieudep (
-    code_dep VARCHAR(10) CONSTRAINT cle_dep_cheflieudep REFERENCES departements(code_dep),
+    code_dep VARCHAR(10) CONSTRAINT pk_cle_dep_cheflieudep REFERENCES departements(code_dep) PRIMARY KEY,
     code_com VARCHAR(10) CONSTRAINT cle_com_cheflieudep REFERENCES communes(code_com)
 );
 
