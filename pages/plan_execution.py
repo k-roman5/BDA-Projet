@@ -12,6 +12,7 @@ def layout():
         html.Br(),
         html.H2("Plan d'exécution (EXPLAIN)"),
         html.Br(),
+        html.H4("Table avec la population totale pour chaque département de la région 'Nouvelle-Aquitaine'."),
         dbc.Card([
             dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),
             dbc.CardBody([
