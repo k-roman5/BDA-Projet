@@ -58,19 +58,34 @@ def layout():
     ])
 
 @callback(
-    [Output('view-table5', 'children'), Output('view-table6', 'children'), Output('insertion-result', 'children')],
+    [Output('insertion-result', 'children')],
     [Input('insert-button', 'n_clicks')], 
-    [State('code-input', 'value'), State('year-input', 'value'), State('population-input', 'value'),
-     State('year-dropdown5', 'value'), State('year-dropdown6', 'value')],
+    [State('code-input', 'value'), State('year-input', 'value'), State('population-input', 'value')],
     prevent_initial_call=True
 )
-def insert_data(n_clicks, code, year, population, year_dep, year_reg):
-    updated_view_dep = view_population_dep_annee(str(year_dep))
-    updated_view_reg = view_population_reg_annee(str(year_reg))
+def insert_data(n_clicks, code, year, population, ):
     if n_clicks > 0:
         insert_result = insert(code, str(year), population)
-        updated_view_reg = view_population_reg_annee(str(year))
-        updated_view_dep = view_population_dep_annee(str(year))
-        return updated_view_dep, updated_view_reg, html.Div(f"Données insérées avec succès : {insert_result}")
+        return html.Div(f"Données insérées avec succès : {insert_result}")
     else:
         return dash.no_update, dash.no_update, html.Div(f"Impossible d'insérer des données")
+    
+@callback(
+    Output('view-table5', 'children'),
+    [Input('insertion-result', 'children'), Input('year-dropdown5', 'value')]
+)
+def update_view(_, year_dep):
+    if year_dep is None:
+        year_dep = '2020'
+    updated_view_dep = view_population_dep_annee(str(year_dep))
+    return updated_view_dep
+
+@callback(
+    Output('view-table6', 'children'),
+    [Input('insertion-result', 'children'), Input('year-dropdown6', 'value')]
+)
+def update_view(_, year_reg):
+    if year_reg is None:
+        year_reg = '2020'
+    updated_view_reg = view_population_reg_annee(str(year_reg))
+    return updated_view_reg
