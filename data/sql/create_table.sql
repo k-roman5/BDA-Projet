@@ -17,12 +17,14 @@ CREATE TABLE communes (
 
 CREATE TABLE cheflieureg (
     code_reg VARCHAR(10) CONSTRAINT cle_reg_cheflieureg REFERENCES regions(code_reg),
-    code_com VARCHAR(10) CONSTRAINT cle_com_cheflieureg REFERENCES communes(code_com)
+    code_com VARCHAR(10) CONSTRAINT cle_com_cheflieureg REFERENCES communes(code_com),
+    CONSTRAINT pk_cheflieureg PRIMARY KEY (code_reg, code_com)
 );
 
 CREATE TABLE cheflieudep (
     code_dep VARCHAR(10) CONSTRAINT cle_dep_cheflieudep REFERENCES departements(code_dep),
-    code_com VARCHAR(10) CONSTRAINT cle_com_cheflieudep REFERENCES communes(code_com)
+    code_com VARCHAR(10) CONSTRAINT cle_com_cheflieudep REFERENCES communes(code_com),
+    CONSTRAINT pk_cheflieudep PRIMARY KEY (code_dep, code_com)
 );
 
 -- Tables pour les données de population
