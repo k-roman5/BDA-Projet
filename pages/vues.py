@@ -34,6 +34,8 @@ def layout():
         html.Br(),
         html.H2("Vues des requêtes SQL"),
         html.Br(),
+        html.P("Les vues SQL sont des objets de base de données virtuels qui représentent le résultat d'une requête SQL stockée dans la base de données. Elles permettent de simplifier la complexité des requêtes en créant une vue logique des données, ce qui facilite leur manipulation et leur utilisation dans d'autres requêtes. Les vues peuvent être utilisées pour masquer des détails complexes, regrouper des données à partir de plusieurs tables ou fournir un sous-ensemble des données disponibles dans une table. Elles offrent également un moyen efficace de partager des résultats de requêtes avec d'autres utilisateurs sans leur accorder un accès direct aux données sous-jacentes."),
+        html.Br(),
         html.H4("La vue pour la population par département"),  
         html.Br(),
         dbc.Card([

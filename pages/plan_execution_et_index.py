@@ -9,8 +9,9 @@ def layout():
     return html.Div([
         html.Br(),
         html.Br(),
-        html.H2("Plan d'exécution et indexAnalyse de l'effet de l'index"),
+        html.H2("Plan d'exécution et index"),
         html.Br(),
+        html.P("Les index sont des structures de données qui améliorent les performances des requêtes en permettant un accès rapide aux données dans une base de données. Ils agissent comme des tables de recherche, en stockant des valeurs de colonnes spécifiques et leurs emplacements physiques dans la base de données. Nous allons analyser leur utilisation sur différentes requêtes afin de comprendre comment ils impactent l'efficacité des differentes requetes."),
         html.Br(),
         html.H4("Table avec la liste les communes avec moins de 5000 habitants"),
                 html.Br(),

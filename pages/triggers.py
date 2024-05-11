@@ -13,6 +13,7 @@ def layout():
         html.Br(),
         html.H2("Triggers SQL"),
         html.Br(),
+        html.P("Les triggers, ou déclencheurs, sont des procédures stockées associées à une table dans une base de données. Ils s'exécutent automatiquement en réponse à certaines actions, telles que l'insertion, la mise à jour ou la suppression de données dans la table. Les triggers sont souvent utilisés pour appliquer des contraintes métier, effectuer des vérifications de données ou automatiser des tâches dans un système de gestion de base de données."),
         html.Br(),
         dbc.Card([
             dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),

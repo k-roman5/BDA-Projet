@@ -12,6 +12,8 @@ def layout():
         html.Br(),
         html.H2("Plan d'exécution (EXPLAIN)"),
         html.Br(),
+        html.P("Le plan d'exécution (EXPLAIN) est une fonctionnalité des systèmes de gestion de bases de données (SGBD) qui permet d'analyser la façon dont une requête SQL sera exécutée par le moteur de la base de données. En fournissant des détails sur les étapes prises par le SGBD pour récupérer et manipuler les données, le plan d'exécution aide les développeurs à comprendre et à optimiser les performances de leurs requêtes. Il indique les opérations effectuées, telles que les analyses séquentielles ou les recherches par index, ainsi que les coûts associés à chaque opération, ce qui permet d'identifier les points d'optimisation potentiels."),
+        html.Br(),
         html.H4("Table avec la population totale pour chaque département de la région 'Nouvelle-Aquitaine'."),
         dbc.Card([
             dbc.CardHeader(html.Span("Requête SQL", style={'color': 'black'})),
