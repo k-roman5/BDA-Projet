@@ -72,6 +72,6 @@ ___
 
 ## Contributeurs  : 
 
-| [<img src="https://avatars.githubusercontent.com/u/102798850?v=4" width="50" height="50" alt=""/>](https://github.com/LouisDelignac) | [<img src="https://avatars.githubusercontent.com/u/102798439?v=4" width="50" height="50" alt=""/>](https://github.com/k-roman5) |       |
-| :----------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: | :---: |
-|                                          [Louis Delignac](https://github.com/LouisDelignac)                                          |                                           [Karina Roman](https://github.com/k-roman5)                                           |
+| [<img src="https://avatars.githubusercontent.com/u/102798850?v=4" width="50" height="50" alt="Louis Delignac"/>](https://github.com/LouisDelignac) | [<img src="https://avatars.githubusercontent.com/u/102798439?v=4" width="50" height="50" alt="Karina Roman"/>](https://github.com/k-roman5) |
+| :------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                 [Louis Delignac](https://github.com/LouisDelignac)                                                 |                                                 [Karina Roman](https://github.com/k-roman5)                                                 |
